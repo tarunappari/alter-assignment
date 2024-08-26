@@ -124,14 +124,42 @@ export const useFormLogic = () => {
       if (formToRender) {
         const formRef = doc(formsCollection, formToRender.id);
 
-        await updateDoc(formRef, {
-          submissions: formToRender.submissions + 1,
-          [`submissionsData.${Date.now()}`]: submittedData,
-        });
+        try {
+          // Fetch the current document snapshot
+          const formSnap = await getDoc(formRef);
 
-        localStorage.setItem(`formSubmitted_${formToRender.id}`, true);
+          if (formSnap.exists()) {
+            const formData = formSnap.data();
+
+            // Retrieve the current submissionsData array (or initialize it as an empty array)
+            const currentSubmissionsData = formData.submissionsData || [];
+
+            // Add the new submission data to the array
+            const updatedSubmissionsData = [
+              ...currentSubmissionsData,
+              {
+                timestamp: Date.now(), // Add a timestamp if needed
+                data: submittedData, // Store the submitted data
+              },
+            ];
+
+            // Update the document with the new submissionsData array
+            await updateDoc(formRef, {
+              submissions: formToRender.submissions + 1, // Increment the submissions count
+              submissionsData: updatedSubmissionsData, // Save the updated array
+            });
+
+            // Mark the form as submitted in localStorage
+            localStorage.setItem(`formSubmitted_${formToRender.id}`, true);
+          } else {
+            console.log("Form document does not exist");
+          }
+        } catch (error) {
+          console.error("Error updating document: ", error);
+        }
       }
     },
+
     handleFormClose: () => {
       if (formToRender) {
         localStorage.setItem(`formClosed_${formToRender.id}`, true);

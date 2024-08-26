@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Navbar from '../common/Navbar';
-import OpenModal from '../common/MUI/OpenModal';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../Firebase';
 import { useNavigate } from 'react-router-dom';
+import FormItems from '../Dashboard/FormItems';
+
 
 const Dashboard = () => {
 
@@ -37,15 +38,8 @@ const Dashboard = () => {
                 <Navbar title={'Dashboard'} />
             </div>
             <div className="dashboard-info-container">
-                <div className="create-formbtn-container">
-                    <OpenModal title={'create form'} />
-                </div>
-                <div className='form-details-container'>
-                    {forms.length > 0 ?( forms.map(form => (
-                        <div className='form-container' key={form.id} onClick={() => handleFormClick(form.id)}>
-                            {form.formName}
-                        </div>
-                    )) ):( <h1>empty</h1> )}
+                <div className="form-details-container">
+                    <FormItems forms={forms} handleFormClick={handleFormClick} />
                 </div>
             </div>
         </DashboardContainer>
@@ -58,20 +52,19 @@ let DashboardContainer = styled.div`
     background-color: #f3f3f3;
     min-height: 100vh;
     .dashboard-info-container{
-        border: 1px solid red;
-        display: flex;
         padding: 3rem;
-        gap: 1rem;
-        .create-formbtn-container,.form-details-container{
-            padding: 1rem;
-            border: 1px solid blue;
-
-        }
 
         .form-details-container{
             .form-container{
-                padding: 2rem;
-                border: 2px solid green;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            justify-content: space-between;
+            min-width: 100%;
+            gap: 2rem;
+                .form-Item{
+                    width: 15rem;
+                    height: 18rem;
+                }
             }
         }
     }

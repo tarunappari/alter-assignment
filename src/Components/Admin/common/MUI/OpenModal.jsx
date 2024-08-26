@@ -5,6 +5,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../../../Context/GlobalContext';
+import Lottie from 'react-lottie';
+import addAnimation from '../../../../assets/lottie/addForm.json'
+import styled from 'styled-components';
 
 const style = {
   position: 'absolute',
@@ -19,11 +22,20 @@ const style = {
   p: 4,
 };
 
-export default function OpenModal({title}) {
+export default function OpenModal({ title }) {
 
-  let {setFormName,formName} =  React.useContext(GlobalContext);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: addAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  }
 
-  let [inputValue,setInputValue] = React.useState(formName)
+  let { setFormName, formName } = React.useContext(GlobalContext);
+
+  let [inputValue, setInputValue] = React.useState(formName)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,8 +49,17 @@ export default function OpenModal({title}) {
   let navigate = useNavigate()
 
   return (
-    <div>
-      <Button onClick={handleOpen}>{title}</Button>
+    <ModalContainer>
+      <button className='newform-button' onClick={handleOpen}>
+        <Lottie
+          options={defaultOptions}
+          style={{
+            height:'12rem',
+            width:'12rem'
+          }}
+        />
+        <h2>{title}</h2>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -46,20 +67,42 @@ export default function OpenModal({title}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" style={{fontWeight:'500'}} component="h2">
-            Create Feedback Form
-          </Typography>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)} // Update local state with input value
-          />
-          <div>
-          <button onClick={handleCreate}>Create</button>
-          <button onClick={handleClose}>Cancel</button>
+          <div className='modal-box' style={{padding:'1rem',display:'flex',flexDirection:'column',justifyContent:'space-between',gap:'1.5rem'}}>
+            <div id="modal-modal-title" style={{fontWeight:'600',fontSize:'1.5rem'}}>
+              Create Feedback Form
+            </div>
+            <div className="input-field">
+            <input
+              type="text"
+              value={inputValue}
+              className='input'
+              onChange={(e) => setInputValue(e.target.value)} // Update local state with input value
+            />
+            </div>
+            <div className='modal-btn-container'>
+              <button className='modal-button green-btn' onClick={handleCreate}>CREATE</button>
+              <button className='modal-button grey-btn' onClick={handleClose}>CANCEL</button>
+            </div>
           </div>
         </Box>
       </Modal>
-    </div>
+    </ModalContainer>
   );
 }
+
+
+let ModalContainer = styled.div`
+  .newform-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 2px 1px #c4c2c2;
+    h2{
+      font-weight: 700;
+    }
+  }
+`

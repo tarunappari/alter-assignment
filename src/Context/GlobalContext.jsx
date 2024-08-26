@@ -107,7 +107,8 @@ export const GlobalProvider = ({ children }) => {
         logicConditions,
         published: true,
         views: 0, // Initialize view count
-        submissions: 0 // Initialize submissions count
+        submissions: 0, // Initialize submissions count
+        publishedDate: new Date(), // Add the published date
       };
   
       await addDoc(collection(db, 'forms'), formDoc);
@@ -117,6 +118,7 @@ export const GlobalProvider = ({ children }) => {
       showPopup("Error publishing form: " + error.message);
     }
   };
+  
 
 
   const showPopup = (message) => {
