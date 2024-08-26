@@ -8,9 +8,13 @@ import styled from 'styled-components';
 import Navbar from '../common/Navbar'
 import FieldEditor from '../Formbuilder/FieldEditor';
 
+
+
 const FormBuilder = () => {
 
+  const { saveForm, publishForm, published } = useContext(GlobalContext);
   const [editingField, setEditingField] = useState(null);
+
 
   return (
     <FormbuilderContainer>
@@ -32,6 +36,10 @@ const FormBuilder = () => {
           )}
         </div>
         <PopupAlert />
+      </div>
+      <div>
+      <button onClick={saveForm}>Save</button>
+        {!published && <button onClick={publishForm}>Publish</button>}
       </div>
     </FormbuilderContainer>
   );

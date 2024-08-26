@@ -3,18 +3,20 @@ import { GlobalContext } from '../../../Context/GlobalContext';
 
 
 const AddLogic = () => {
-  const [urlCondition, setUrlCondition] = useState('');
-  const [dateCondition, setDateCondition] = useState('');
-  const [timeCondition, setTimeCondition] = useState('');
-  const { showPopup } = useContext(GlobalContext);
+  const { logicConditions, setLogicConditions, showPopup } = useContext(GlobalContext);
+  const [urlCondition, setUrlCondition] = useState(logicConditions.url);
+  const [dateCondition, setDateCondition] = useState(logicConditions.date);
+  const [timeCondition, setTimeCondition] = useState(logicConditions.time);
 
-  const handleSubmit = () => {
+  const handleApplyLogic = () => {
     if (!urlCondition && !dateCondition && !timeCondition) {
       showPopup("Please fill in at least one logic condition.");
       return;
     }
-    // Handle form submission with logic conditions
+
+    setLogicConditions({ url: urlCondition, date: dateCondition, time: timeCondition });
   };
+
 
   return (
     <div>
@@ -31,7 +33,7 @@ const AddLogic = () => {
         <label>Show at a specific time: </label>
         <input type="time" value={timeCondition} onChange={(e) => setTimeCondition(e.target.value)} />
       </div>
-      <button onClick={handleSubmit}>Apply Logic</button>
+      <button onClick={handleApplyLogic}>Apply Logic</button>
     </div>
   );
 };
