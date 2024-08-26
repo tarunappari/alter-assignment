@@ -22,7 +22,12 @@ const FormBuilder = () => {
         <Navbar title={'form builder'} />
       </div>
       <div className="formbuilder-content-container">
-        <div className="left-section">
+        <div><AddLogic /></div>
+        <div className="mid-section">
+          <div className='save-publish-btn-container'>
+            <button onClick={saveForm} className='save'>SAVE</button>
+            {!published && <button onClick={publishForm} className='publish'>PUBLISH</button>}
+          </div>
           <FormDisplay setEditingField={setEditingField} />
         </div>
         <div className="right-section">
@@ -31,15 +36,10 @@ const FormBuilder = () => {
           ) : (
             <>
               <AddFields />
-              <AddLogic />
             </>
           )}
         </div>
-        <PopupAlert />
-      </div>
-      <div>
-      <button onClick={saveForm}>Save</button>
-        {!published && <button onClick={publishForm}>Publish</button>}
+        {/* <PopupAlert /> */}
       </div>
     </FormbuilderContainer>
   );
@@ -51,18 +51,35 @@ let FormbuilderContainer = styled.div`
   min-height: 100vh;
   .formbuilder-content-container{
     display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 20% 60% 20%;
+  background-color: #f3f3f3;
   min-height: 90vh;
-  .left-section,.right-section{
-    border: 1px solid red;
+  .mid-section{
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .right-section{
-    align-self: flex-start;
+  .save-publish-btn-container{
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    top: -13rem;
+    button{
+      padding: 0.7rem 1.3rem;
+      color: #fff;
+      border-radius: 0.3rem;
+      font-weight: 600;
+    }
+    .save{
+      background-color: #2e7d32;
+    }
+    .publish{
+      background-color: #2196f3;
+    }
   }
   }
 `

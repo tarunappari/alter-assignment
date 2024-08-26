@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../../../Context/GlobalContext';
+import styled from 'styled-components';
 
 const FormDisplay = ({ setEditingField }) => {
     const { formFields, setFormFields, removeField, formName, setFormName } = useContext(GlobalContext);
@@ -150,7 +151,7 @@ const FormDisplay = ({ setEditingField }) => {
     };
 
     return (
-        <div>
+        <FormDisplayContainer>
             {isEditingName ? (
                 <div>
                     <input
@@ -176,8 +177,12 @@ const FormDisplay = ({ setEditingField }) => {
             ) : (
                 <p>No fields added yet</p>
             )}
-        </div>
+        </FormDisplayContainer>
     );
 };
 
 export default FormDisplay;
+
+let FormDisplayContainer = styled.div`
+    border: 1px solid red;
+`

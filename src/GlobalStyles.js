@@ -17,6 +17,7 @@ export const GlobalStyles = createGlobalStyle`
    button{
       border: none;
       padding: 0.5rem 0.5rem;
+      cursor: pointer;
    }
 
    /* modal styles */
