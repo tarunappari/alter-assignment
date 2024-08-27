@@ -7,16 +7,20 @@ import PopupAlert from '../Formbuilder/PopupAlert';
 import styled from 'styled-components';
 import Navbar from '../common/Navbar'
 import FieldEditor from '../Formbuilder/FieldEditor';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
 const FormBuilder = () => {
 
+  const { formId } = useParams();
   const { setFormFields,setLogicConditions,saveForm, publishForm, published } = useContext(GlobalContext);
   const [editingField, setEditingField] = useState(null);
 
   let navigate = useNavigate()
+
+  console.log(formId);
+  
 
   const handlePublished = async () => {
     try {
@@ -35,7 +39,7 @@ const FormBuilder = () => {
 
   const handleSave = async() =>{
     try {
-      const saved = await saveForm();
+      const saved = await saveForm(formId);
   
       if (saved) {
         setFormFields([])

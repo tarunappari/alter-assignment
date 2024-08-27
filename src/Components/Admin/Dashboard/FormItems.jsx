@@ -55,7 +55,7 @@ const FormItems = ({ forms, handleFormClick,handleFormDelete,handleEditClick }) 
                                 Published At
                             </div>
                             <div>
-                                {form.publishedDate.toDate().toLocaleDateString()}
+                                {form && form.publishedDate && form.publishedDate.toDate().toLocaleDateString()}
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ const FormItems = ({ forms, handleFormClick,handleFormDelete,handleEditClick }) 
                         </div>
                     </div>
                 </div>
-            ))) : (<h1>empty</h1>)}
+            ))) : (<h1 style={{fontWeight:'600',paddingTop:'7rem'}}>Create Forms</h1>)}
         </FormItemContainer>
     )
 }

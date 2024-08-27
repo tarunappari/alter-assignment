@@ -18,6 +18,7 @@ function App() {
         {/* admin routes */}
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/create-form" element={<Formbuilder />} />
+        <Route path="/admin/create-form/:formId" element={<Formbuilder />} />
         <Route path="/admin/form-detail/:formId" element={<FormDetails />} />
         <Route path="/" element={<LandingPage />} />
       </Routes>

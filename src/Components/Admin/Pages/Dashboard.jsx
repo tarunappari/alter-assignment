@@ -65,7 +65,7 @@ const Dashboard = () => {
                 setFormFields(formFields || []); // Ensure it's an array
                 setLogicConditions(logicConditions || { url: '', date: '', time: '' }); // Ensure it's an object
                 setPublished(published || false);
-                navigate('/admin/create-form');
+                navigate(`/admin/create-form/${formId}`);
             } else {
                 console.error("No such form document!");
             }

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { db } from '../Firebase';
-import { collection, addDoc, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc, addDoc, getDoc, updateDoc, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 export const GlobalContext = createContext();
@@ -12,7 +12,7 @@ export const GlobalProvider = ({ children }) => {
   const [logicConditions, setLogicConditions] = useState({ url: '', date: '', time: '' });
   const [published, setPublished] = useState(false); // To track publish status
 
-  const addField = (fieldType,label) => {
+  const addField = (fieldType, label) => {
     if (formFields.length >= 7) {
       showToastMessage('You cannot add more than 7 fields', 'warning')
       return;
@@ -48,13 +48,14 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
-  const saveForm = async () => {
-    if (formFields.length == 0) {
-      showToastMessage('Atleast add one input field', 'warning')
+  const saveForm = async (formId = null) => {
+    if (formFields.length === 0) {
+      showToastMessage('At least add one input field', 'warning');
       return false;
     }
+
     if (!logicConditions.url && !logicConditions.date && !logicConditions.time) {
-      showToastMessage('Please apply at least one logic condition', 'warning')
+      showToastMessage('Please apply at least one logic condition', 'warning');
       return false;
     }
 
@@ -65,18 +66,42 @@ export const GlobalProvider = ({ children }) => {
         logicConditions,
       };
 
-      console.log('Saving form:', { formName, formFields, logicConditions });
-      await addDoc(collection(db, 'forms'), formDoc);
+      if (formId) {
+        // Update existing form
+        const formRef = doc(db, 'forms', formId);
+        const formSnap = await getDoc(formRef);
 
+        if (formSnap.exists()) {
+          // Merge existing fields with new data
+          const existingData = formSnap.data();
+          const updatedData = {
+            ...existingData,
+            ...formDoc, // Merge new data into existing data
+          };
 
-      // Replace with appropriate Firestore collection path
-      await addDoc(collection(db, 'forms'), formDoc);
-      showToastMessage('Form saved successfully', 'success')
+          await setDoc(formRef, updatedData); // Update the document
+        } else {
+          showToastMessage('Form does not exist', 'warning');
+          return false;
+        }
+      } else {
+        // Add new form
+        await addDoc(collection(db, 'forms'), {
+          ...formDoc,
+          published: false, // Default values for new forms
+          views: 0,
+          submissions: 0,
+        });
+      }
+
+      setFormFields([])
+      setFormName('Untitled Form')
+      setLogicConditions({ url: '', date: '', time: '' })
+      showToastMessage('Form saved successfully', 'success');
       return true;
     } catch (error) {
-      showToastMessage(`Error saving form: ${error.message}`, 'error')
+      showToastMessage(`Error saving form: ${error.message}`, 'error');
     }
-
   };
 
   const publishForm = async () => {
@@ -110,6 +135,7 @@ export const GlobalProvider = ({ children }) => {
     }
   
   };
+
 
 
 

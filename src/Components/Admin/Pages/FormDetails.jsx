@@ -67,29 +67,29 @@ const FormDetails = () => {
           <div className='feedbacks-container'>
             <h3 className='title'>Feedbacks List :</h3>
             <div>
-              {form && form.submissionsData && Object.keys(form.submissionsData).length > 0 ? (
-                Object.entries(form.submissionsData).map(([timestamp, dataArray], index) => (
-                  <Accordion>
+              {form && form.submissionsData && form.submissionsData.length > 0 ? (
+                form.submissionsData.map((submission, index) => (
+                  <Accordion key={submission.timestamp}>
                     <AccordionSummary
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1-content"
                       id="panel1-header"
                     >
                       <div style={{
-                        color:'#545454',
-                        fontWeight:'600'
+                        color: '#545454',
+                        fontWeight: '600'
                       }}>FeedBack {index + 1}</div>
                       <div style={{
                         position: 'relative',
                         left: '59rem',
-                        color:'grey',
-                        fontSize:'0.8rem',
-                        fontWeight:'600'
-                      }}>{new Date(parseInt(timestamp)).toLocaleDateString()}</div>
+                        color: 'grey',
+                        fontSize: '0.8rem',
+                        fontWeight: '600'
+                      }}>{new Date(parseInt(submission.timestamp)).toLocaleDateString()}</div>
                     </AccordionSummary>
                     <AccordionDetails>
-                      {dataArray.map((item, itemIndex) => (
-                        <div className='field-container'>
+                      {submission.data.map((item, itemIndex) => (
+                        <div className='field-container' key={itemIndex}>
                           <div className='label'>{item.label}</div>
                           <div className='content'>{item.content}</div>
                         </div>
@@ -100,7 +100,6 @@ const FormDetails = () => {
               ) : (
                 <h2 className='no-submissions'>No submissions yet</h2>
               )}
-
             </div>
           </div>
         </div>
