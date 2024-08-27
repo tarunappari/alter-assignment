@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { db } from '../Firebase';
 import { collection, addDoc, setDoc, doc, updateDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 export const GlobalContext = createContext();
 
@@ -11,38 +12,16 @@ export const GlobalProvider = ({ children }) => {
   const [logicConditions, setLogicConditions] = useState({ url: '', date: '', time: '' });
   const [published, setPublished] = useState(false); // To track publish status
 
-
-  // useEffect(() => {
-  //   const savedFields = JSON.parse(localStorage.getItem('formFields')) || [];
-  //   const savedFormName = localStorage.getItem('formName') || 'Untitled Form';
-
-  //   console.log('Loaded fields from localStorage:', savedFields);
-  //   console.log('Loaded form name from localStorage:', savedFormName);
-
-  //   setFormFields(savedFields);
-  //   setFormName(savedFormName);
-  // }, []);
-
-
-  // // Save form data to localStorage whenever it changes
-  // useEffect(() => {
-  //   localStorage.setItem('formFields', JSON.stringify(formFields));
-  //   localStorage.setItem('formName', formName);
-  //   console.log('Saved fields to localStorage:', formFields);
-  //   console.log('Saved form name to localStorage:', formName);
-
-  // }, [formFields, formName]);
-
-  const addField = (fieldType) => {
+  const addField = (fieldType,label) => {
     if (formFields.length >= 7) {
-      showPopup("You cannot add more than 7 fields.");
+      showToastMessage('You cannot add more than 7 fields', 'warning')
       return;
     }
 
     const newField = {
       id: Date.now(),
       type: fieldType,
-      label: fieldType,
+      label: label,
       content: '',
       required: false,
       errorMessage: '',
@@ -70,9 +49,13 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const saveForm = async () => {
+    if (formFields.length == 0) {
+      showToastMessage('Atleast add one input field', 'warning')
+      return false;
+    }
     if (!logicConditions.url && !logicConditions.date && !logicConditions.time) {
-      showPopup("Please apply at least one logic condition before saving.");
-      return;
+      showToastMessage('Please apply at least one logic condition', 'warning')
+      return false;
     }
 
     try {
@@ -88,18 +71,25 @@ export const GlobalProvider = ({ children }) => {
 
       // Replace with appropriate Firestore collection path
       await addDoc(collection(db, 'forms'), formDoc);
-      showPopup("Form saved successfully.");
+      showToastMessage('Form saved successfully', 'success')
+      return true;
     } catch (error) {
-      showPopup("Error saving form: " + error.message);
+      showToastMessage(`Error saving form: ${error.message}`, 'error')
     }
+
   };
 
   const publishForm = async () => {
-    if (!logicConditions.url && !logicConditions.date && !logicConditions.time) {
-      showPopup("Please apply at least one logic condition before publishing.");
-      return;
+    if (formFields.length == 0) {
+      showToastMessage('Atleast add one input field', 'warning')
+      return false;
     }
-  
+    
+    if (!logicConditions.url && !logicConditions.date && !logicConditions.time) {
+      showToastMessage('Please apply at least one logic condition', 'warning')
+      return false;
+    }
+
     try {
       const formDoc = {
         formName,
@@ -110,20 +100,34 @@ export const GlobalProvider = ({ children }) => {
         submissions: 0, // Initialize submissions count
         publishedDate: new Date(), // Add the published date
       };
-  
+
       await addDoc(collection(db, 'forms'), formDoc);
       setPublished(true); // Update publish status
-      showPopup("Form published successfully.");
+      showToastMessage('Form published successfully', 'success')
+      return true;
     } catch (error) {
-      showPopup("Error publishing form: " + error.message);
+      showToastMessage(`Error publishing form ${error.message}`, 'error')
     }
-  };
   
+  };
+
 
 
   const showPopup = (message) => {
     setPopupMessage(message);
     setTimeout(() => setPopupMessage(''), 3000); // Automatically hide popup after 3 seconds
+  };
+
+  const showToastMessage = (message, type) => {
+    if (type === 'success') {
+      toast.success(message);
+    } else if (type === 'error') {
+      toast.error(message);
+    } else if (type === 'info') {
+      toast.info(message);
+    } else if (type === 'warning') {
+      toast.warning(message);
+    }
   };
 
   return (
@@ -141,7 +145,9 @@ export const GlobalProvider = ({ children }) => {
       setLogicConditions,
       saveForm,
       publishForm,
-      published
+      published,
+      showToastMessage,
+      setPublished
     }}>
       {children}
     </GlobalContext.Provider>

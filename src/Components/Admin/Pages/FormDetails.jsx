@@ -15,9 +15,6 @@ const FormDetails = () => {
   const [form, setForm] = useState(null);
   const [submissions, setSubmissions] = useState([]);
 
-  console.log(form);
-  console.log(form && form.submissionsData);
-
 
   useEffect(() => {
     if (!formId) {
@@ -68,7 +65,7 @@ const FormDetails = () => {
           </div>
 
           <div className='feedbacks-container'>
-            <h3 className='title'>Feedbacks List</h3>
+            <h3 className='title'>Feedbacks List :</h3>
             <div>
               {form && form.submissionsData && Object.keys(form.submissionsData).length > 0 ? (
                 Object.entries(form.submissionsData).map(([timestamp, dataArray], index) => (
@@ -101,7 +98,7 @@ const FormDetails = () => {
                   </Accordion>
                 ))
               ) : (
-                <h1>No submissions yet</h1>
+                <h2 className='no-submissions'>No submissions yet</h2>
               )}
 
             </div>

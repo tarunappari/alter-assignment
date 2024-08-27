@@ -4,18 +4,19 @@ import styled from 'styled-components';
 
 
 const AddLogic = () => {
-  const { logicConditions, setLogicConditions, showPopup } = useContext(GlobalContext);
+  const { logicConditions, setLogicConditions,showToastMessage } = useContext(GlobalContext);
   const [urlCondition, setUrlCondition] = useState(logicConditions.url);
   const [dateCondition, setDateCondition] = useState(logicConditions.date);
   const [timeCondition, setTimeCondition] = useState(logicConditions.time);
 
   const handleApplyLogic = () => {
     if (!urlCondition && !dateCondition && !timeCondition) {
-      showPopup("Please fill in at least one logic condition.");
+      showToastMessage('Please fill atleast one logic condition.','warning')
       return;
     }
 
     setLogicConditions({ url: urlCondition, date: dateCondition, time: timeCondition });
+    showToastMessage('Logic Applied','success')
   };
 
 
@@ -25,7 +26,7 @@ const AddLogic = () => {
       <div className="logicfirlds-container">
         <div>
           <label>Show based on URL: </label>
-          <input type="text" value={urlCondition} onChange={(e) => setUrlCondition(e.target.value)} />
+          <input type="text" placeholder='/contact' value={urlCondition} onChange={(e) => setUrlCondition(e.target.value)} />
         </div>
         <div>
           <label>Show on a specific date: </label>
@@ -36,7 +37,7 @@ const AddLogic = () => {
           <input type="time" value={timeCondition} onChange={(e) => setTimeCondition(e.target.value)} />
         </div>
         <div>
-          <button onClick={handleApplyLogic}>Apply Logic</button>
+          <button onClick={handleApplyLogic} className='blue'>Apply Logic</button>
         </div>
       </div>
     </AddLogicContainer>
@@ -48,8 +49,8 @@ export default AddLogic;
 let AddLogicContainer = styled.div`
      background-color: #fff;
     min-height: 88vh;
-    position: relative;
-    top: 0.3rem;
+    position: fixed;
+    top: 4rem;
     padding: 3rem;
     border-radius: 0.8rem;
     border: 0.1rem solid #d2d2d2;

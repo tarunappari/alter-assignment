@@ -5,13 +5,15 @@ import Dashboard from './Components/Admin/Pages/Dashboard';
 import Formbuilder from './Components/Admin/Pages/Formbuilder';
 import FormDetails from './Components/Admin/Pages/FormDetails';
 import LandingPage from './Components/Website/LandingPage';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div>
       <GlobalStyles />
+      <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         {/* admin routes */}
         <Route path="/admin" element={<Dashboard />} />

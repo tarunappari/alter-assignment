@@ -33,7 +33,7 @@ export default function OpenModal({ title }) {
     }
   }
 
-  let { setFormName, formName } = React.useContext(GlobalContext);
+  let { setLogicConditions,setFormFields,setFormName, formName } = React.useContext(GlobalContext);
 
   let [inputValue, setInputValue] = React.useState(formName)
   const [open, setOpen] = React.useState(false);
@@ -41,7 +41,9 @@ export default function OpenModal({ title }) {
   const handleClose = () => setOpen(false);
 
   const handleCreate = () => {
-    setFormName(inputValue); // Update the global state with the input value
+    setFormName(inputValue);
+    setFormFields([])
+    setLogicConditions({ url: '', date: '', time: '' })
     navigate('/admin/create-form'); // Navigate to the form builder page
     handleClose()
   };

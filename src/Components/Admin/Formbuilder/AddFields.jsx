@@ -27,13 +27,13 @@ const AddFields = () => {
     <AddFieldContainer>
       <h3 className='title'> Add Fields</h3>
       <div className="addfields-btns-container">
-        <button onClick={() => addField('TextArea')}> <div><BsTextareaResize style={{marginRight:'0.4rem'}}/> Text Area</div><div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
-        <button onClick={() => addField('NumericRating')}><div><FaSortNumericDown  style={{marginRight:'0.4rem'}}/>Numeric Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/> </div></button>
-        <button onClick={() => addField('StarRating')}><div><FaStarHalfAlt style={{marginRight:'0.4rem'}} />Star Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
-        <button onClick={() => addField('SmileyRating')}><div><FaSmileWink style={{marginRight:'0.4rem'}}/>Smiley Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
-        <button onClick={() => addField('SingleLineInput')}><div><RiInputField  style={{marginRight:'0.4rem'}}/>Single Line Input</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
-        <button onClick={() => addField('Radio')}><div><BsUiRadios  style={{marginRight:'0.4rem'}}/>Radio</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
-        <button onClick={() => addField('Categories')}><div><TbCategoryFilled  style={{marginRight:'0.4rem'}}/>Categories</div><div> <Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/> </div></button>
+        <button onClick={() => addField('TextArea','Would you like to add a comment?')}> <div><BsTextareaResize style={{marginRight:'0.4rem'}}/> Text Area</div><div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
+        <button onClick={() => addField('NumericRating','How likely you will recommend us?')}><div><FaSortNumericDown  style={{marginRight:'0.4rem'}}/>Numeric Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/> </div></button>
+        <button onClick={() => addField('StarRating','Give a star rating for the website.')}><div><FaStarHalfAlt style={{marginRight:'0.4rem'}} />Star Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
+        <button onClick={() => addField('SmileyRating','What is your opinion of this page?')}><div><FaSmileWink style={{marginRight:'0.4rem'}}/>Smiley Rating</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
+        <button onClick={() => addField('SingleLineInput','Do you have any suggestions to improve our website?')}><div><RiInputField  style={{marginRight:'0.4rem'}}/>Single Line Input</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
+        <button onClick={() => addField('Radio','Multiple choice - 1 answer')}><div><BsUiRadios  style={{marginRight:'0.4rem'}}/>Radio</div> <div><Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/></div> </button>
+        <button onClick={() => addField('Categories','Choose a subject and provide your feedback:')}><div><TbCategoryFilled  style={{marginRight:'0.4rem'}}/>Categories</div><div> <Lottie options={defaultOptions} style={{height:'2rem',width:'2rem'}}/> </div></button>
       </div>
     </AddFieldContainer>
   );
@@ -44,8 +44,8 @@ export default AddFields;
 let AddFieldContainer = styled.div`
     background-color: #fff;
     min-height: 88vh;
-    position: relative;
-    top: 0.3rem;
+    position: fixed;
+    top: 4rem;
     padding: 2.5rem;
     border-radius: 0.8rem;
     border: 0.1rem solid #d2d2d2;

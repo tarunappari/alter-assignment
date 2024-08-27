@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import formLogoAnimation from '../../../assets/lottie/form-logo.json'
 import Lottie from 'react-lottie';
 
-const FormItems = ({ forms, handleFormClick }) => {
+const FormItems = ({ forms, handleFormClick,handleFormDelete,handleEditClick }) => {
 
     const defaultOptions = {
         loop: true,
@@ -65,10 +65,10 @@ const FormItems = ({ forms, handleFormClick }) => {
                         </div>
                         <div className="edit-delete-btns">
                             <div className="edit">
-                                <button>EDIT</button>
+                                <button onClick={() => handleEditClick(form.id)}>EDIT</button>
                             </div>
                             <div className="delete">
-                                <button>DELETE</button>
+                                <button onClick={() => handleFormDelete(form.id)}>DELETE</button>
                             </div>
                         </div>
                     </div>
