@@ -17,8 +17,6 @@ const FormBuilder = () => {
   const [editingField, setEditingField] = useState(null);
 
   let navigate = useNavigate()
-
-  console.log(formId);
   
 
   //this is the func to handle publish click

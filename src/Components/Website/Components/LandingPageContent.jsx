@@ -130,7 +130,7 @@ const LandingPageContent = () => {
       item.addEventListener('mouseover', updatePlaceholderText);
       item.addEventListener('mouseout', resetPlaceholderText);
     });
-
+    
     return () => {
       items.forEach((item) => {
         item.removeEventListener('mouseover', updatePlaceholderText);

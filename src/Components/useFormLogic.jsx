@@ -28,13 +28,11 @@ export const useFormLogic = () => {
 
         // Skip if form has been rendered
         if (formRendered) {
-          console.log(`Skipping form: ${formId} (already rendered)`);
           continue;
         }
 
         //skipping the form if it is not published
         if(published === false){
-          console.log(`Skipping form: ${formId} not published at!`);
           continue;
         }
 
@@ -114,13 +112,11 @@ export const useFormLogic = () => {
   const handleFormRendering = (form, timeoutDuration) => {
     if (timeoutDuration && timeoutDuration > 0) {
       const id = setTimeout(() => {
-        console.log(`Form timeout reached: Rendering form ${form.id}`);
         setFormToRender(form);
       }, timeoutDuration);
 
       setTimeoutId(id);
     } else {
-      console.log(`Rendering form immediately: ${form.id}`);
       setFormToRender(form);
     }
   };
@@ -178,7 +174,6 @@ export const useFormLogic = () => {
             formRendered: true,
           });
 
-          console.log('Form closed:', formToRender.id);
           setFormToRender(null);
         } catch (error) {
           console.error("Error closing form: ", error);

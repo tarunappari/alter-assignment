@@ -44,7 +44,6 @@ const Dashboard = () => {
 
             // Remove the deleted form from the state
             setForms(forms.filter(form => form.id !== formId));
-            console.log(`Form with ID: ${formId} deleted successfully`);
         } catch (error) {
             console.error(`Error deleting form with ID: ${formId}`, error);
         }
@@ -62,7 +61,6 @@ const Dashboard = () => {
 
                 //here im extract form fields and logicConditions from the document
                 const { formFields, logicConditions, published } = formData;
-                console.log(formFields, logicConditions, published);
 
 
                 // setting the state for formFields and logicConditions

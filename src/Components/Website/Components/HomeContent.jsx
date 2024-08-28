@@ -48,7 +48,6 @@ const HomeContent = () => {
                     <h3
                         className="hover-this"
                         ref={(el) => (linksRef.current[0] = el)}
-                        onClick={() => console.log('home')}
                         style={{fontSize:'2rem'}}
                     >
                         <span>This</span>

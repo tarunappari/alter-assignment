@@ -44,7 +44,6 @@ const FeedbackForm = ({ form, onSubmit, onClose }) => {
     if (valid) {
       setIsLoading(true); // Start loading
       try {
-        console.log(formData);
         
         await onSubmit(formData); // This will include both id, label, and content
         setFormData(form.formFields.map(field => ({ id: field.id, label: field.label, content: '' }))); // Clear form
