@@ -4,8 +4,12 @@ import styled from 'styled-components';
 import formLogoAnimation from '../../../assets/lottie/form-logo.json'
 import Lottie from 'react-lottie';
 
+
+//this is the component which is passing the form items to the form container which is rendering in the dashboard
+//we are doing conditional render is the forms length is < 0 we are sending a tag that shows user to create form
 const FormItems = ({ forms, handleFormClick,handleFormDelete,handleEditClick }) => {
 
+    
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -19,7 +23,7 @@ const FormItems = ({ forms, handleFormClick,handleFormDelete,handleEditClick }) 
     return (
         <FormItemContainer className='form-container'>
             <OpenModal title={'New Form'} />
-            {forms.length > 0 ? (forms.map(form => (
+            {forms.length > 0 ? (forms.map((form,i) => (
                 <div className='form-Item' key={form.id}>
                     <div className='form-item-logo'>
                         <Lottie

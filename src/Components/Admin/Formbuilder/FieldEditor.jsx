@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../../../Context/GlobalContext';
 import styled from 'styled-components';
 
+
+//this component is responsible for input field editor
 const FieldEditor = ({ field, setEditingField }) => {
     const { editField } = useContext(GlobalContext);
     const [label, setLabel] = useState(field.label || '');
@@ -10,13 +12,14 @@ const FieldEditor = ({ field, setEditingField }) => {
     const [options, setOptions] = useState(field.options || ['Option 1', 'Option 2', 'Option 3']);
 
     const handleSave = () => {
-        console.log('Saving field:', { label, required, errorMessage, options });
+        //after clicking save we are editing the that field through the field.id 
         editField(field.id, { label, required, errorMessage, options });
         setEditingField(null);
     };
 
 
     const handleOptionChange = (index, newOption) => {
+        //handling the option change
         const updatedOptions = [...options];
         updatedOptions[index] = newOption;
         setOptions(updatedOptions);

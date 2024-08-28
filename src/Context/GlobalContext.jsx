@@ -12,6 +12,7 @@ export const GlobalProvider = ({ children }) => {
   const [logicConditions, setLogicConditions] = useState({ url: '', date: '', time: '' });
   const [published, setPublished] = useState(false); // To track publish status
 
+  //adding fields to the form 
   const addField = (fieldType, label) => {
     if (formFields.length >= 7) {
       showToastMessage('You cannot add more than 7 fields', 'warning')
@@ -34,11 +35,13 @@ export const GlobalProvider = ({ children }) => {
   };
 
 
+  //removing field on delete
   const removeField = (id) => {
     setFormFields(prevFields => prevFields.filter(field => field.id !== id));
   };
 
 
+  //updating the firld
   const editField = (id, updatedField) => {
     console.log('Updating field with id:', id, 'with data:', updatedField);
     setFormFields((prevFields) =>
@@ -48,6 +51,7 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
+  // we are saving the form without publishing it
   const saveForm = async (formId = null) => {
     if (formFields.length === 0) {
       showToastMessage('At least add one input field', 'warning');
@@ -79,7 +83,7 @@ export const GlobalProvider = ({ children }) => {
             ...formDoc, // Merge new data into existing data
           };
 
-          await setDoc(formRef, updatedData); // Update the document
+          await setDoc(formRef, updatedData); 
         } else {
           showToastMessage('Form does not exist', 'warning');
           return false;
@@ -88,7 +92,7 @@ export const GlobalProvider = ({ children }) => {
         // Add new form
         await addDoc(collection(db, 'forms'), {
           ...formDoc,
-          published: false, // Default values for new forms
+          published: false,
           views: 0,
           submissions: 0,
         });
@@ -104,6 +108,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  //publishing the form
   const publishForm = async () => {
     if (formFields.length == 0) {
       showToastMessage('Atleast add one input field', 'warning')
@@ -121,13 +126,13 @@ export const GlobalProvider = ({ children }) => {
         formFields,
         logicConditions,
         published: true,
-        views: 0, // Initialize view count
-        submissions: 0, // Initialize submissions count
-        publishedDate: new Date(), // Add the published date
+        views: 0, 
+        submissions: 0, 
+        publishedDate: new Date(), 
       };
 
       await addDoc(collection(db, 'forms'), formDoc);
-      setPublished(true); // Update publish status
+      setPublished(true); 
       showToastMessage('Form published successfully', 'success')
       return true;
     } catch (error) {
@@ -141,7 +146,7 @@ export const GlobalProvider = ({ children }) => {
 
   const showPopup = (message) => {
     setPopupMessage(message);
-    setTimeout(() => setPopupMessage(''), 3000); // Automatically hide popup after 3 seconds
+    setTimeout(() => setPopupMessage(''), 3000);
   };
 
   const showToastMessage = (message, type) => {

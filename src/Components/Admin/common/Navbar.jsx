@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
 
+//navbar
+
 const Navbar = ({ title }) => {
   return (
     <NavbarContainer>

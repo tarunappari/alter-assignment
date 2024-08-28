@@ -11,6 +11,10 @@ import Accordion from '@mui/material/Accordion';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const FormDetails = () => {
+
+  //we are fetching the forms details using the form id that came as a params
+  //showing the entire data regarding the form
+
   const { formId } = useParams();
   const [form, setForm] = useState(null);
   const [submissions, setSubmissions] = useState([]);

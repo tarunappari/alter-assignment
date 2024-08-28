@@ -9,12 +9,14 @@ const AddLogic = () => {
   const [dateCondition, setDateCondition] = useState(logicConditions.date);
   const [timeCondition, setTimeCondition] = useState(logicConditions.time);
 
+  //if user didnt enter atleast one logic then we are returning 
   const handleApplyLogic = () => {
     if (!urlCondition && !dateCondition && !timeCondition) {
       showToastMessage('Please fill atleast one logic condition.','warning')
       return;
     }
 
+    //if logic is enetr then we are updating our state which is present in the globalcontext
     setLogicConditions({ url: urlCondition, date: dateCondition, time: timeCondition });
     showToastMessage('Logic Applied','success')
   };

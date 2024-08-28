@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import FeedbackForm from './FeedbackForm';
-import { useFormLogic } from '../useFormLogic';
+import FeedbackForm from '../Components/FeedbackForm';
+import { useFormLogic } from '../../useFormLogic';
 import styled from 'styled-components';
+import AboutContent from '../Components/AboutContent'
 
-const LandingPage = () => {
+const AboutPage = () => {
   let { formToRender, handleSubmit, handleFormClose } = useFormLogic();
-
-  console.log(formToRender);
   
 
   if (
     (formToRender && localStorage.getItem(`formSubmitted_${formToRender?.id}`)) ||
     (formToRender && localStorage.getItem(`formClosed_${formToRender?.id}`))
   ) {
-    return <div>Landing</div>;
+    return <div><AboutContent /></div>;
   }
 
   return (
-    <LandingPageContainer>
-      <h1>Landing Page</h1>
+    <AboutPageContainer>
+      <AboutContent />
       { formToRender && (
         <div className="form-container">
           <FeedbackForm form={formToRender} onSubmit={handleSubmit} onClose={handleFormClose} />
         </div>
       ) }
-
-    </LandingPageContainer>
+    </AboutPageContainer>
   );
 };
 
-export default LandingPage;
+export default AboutPage;
 
-let LandingPageContainer = styled.div`
+let AboutPageContainer = styled.div`
     .form-container{
       position: fixed;
   top: 0;

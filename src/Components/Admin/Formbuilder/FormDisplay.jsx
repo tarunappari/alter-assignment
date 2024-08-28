@@ -9,6 +9,7 @@ const FormDisplay = ({ setEditingField }) => {
     const [isEditingName, setIsEditingName] = useState(false);
 
 
+    //handling the fields on the input changing the state using the field id
     const handleBlockClick = (field, value) => {
         const updatedFields = formFields.map(f =>
             f.id === field.id ? { ...f, value: value } : f
@@ -16,6 +17,7 @@ const FormDisplay = ({ setEditingField }) => {
         setFormFields(updatedFields);
     };
 
+    //rendering the diff input fields
     const renderField = (field) => {
         switch (field.type) {
             case 'TextArea':

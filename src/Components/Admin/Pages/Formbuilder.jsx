@@ -3,7 +3,6 @@ import { GlobalContext } from '../../../Context/GlobalContext';
 import FormDisplay from '../Formbuilder/FormDisplay';
 import AddFields from '../Formbuilder/AddFields';
 import AddLogic from '../Formbuilder/AddLogic';
-import PopupAlert from '../Formbuilder/PopupAlert';
 import styled from 'styled-components';
 import Navbar from '../common/Navbar'
 import FieldEditor from '../Formbuilder/FieldEditor';
@@ -14,7 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const FormBuilder = () => {
 
   const { formId } = useParams();
-  const { setFormFields,setLogicConditions,saveForm, publishForm, published } = useContext(GlobalContext);
+  const { setFormFields,setLogicConditions,saveForm, publishForm, published,setFormName } = useContext(GlobalContext);
   const [editingField, setEditingField] = useState(null);
 
   let navigate = useNavigate()
@@ -22,6 +21,7 @@ const FormBuilder = () => {
   console.log(formId);
   
 
+  //this is the func to handle publish click
   const handlePublished = async () => {
     try {
       const published = await publishForm();
@@ -29,6 +29,7 @@ const FormBuilder = () => {
       if (published) {
         setFormFields([])
         setLogicConditions({ url: '', date: '', time: '' });
+        setFormName('Untitled Form')
         navigate('/admin');
       }
     } catch (error) {
@@ -37,6 +38,7 @@ const FormBuilder = () => {
   };
   
 
+  //saving the form
   const handleSave = async() =>{
     try {
       const saved = await saveForm(formId);

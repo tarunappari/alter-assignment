@@ -11,6 +11,8 @@ import { TbCategoryFilled } from "react-icons/tb";
 import plusAnimation from '../../../assets/lottie/plus.json'
 import Lottie from 'react-lottie';
 
+
+//from this component we are sending the button of inputs to the form builder component with default label values
 const AddFields = () => {
   const { addField } = useContext(GlobalContext);
 

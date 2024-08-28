@@ -15,6 +15,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        //here we are fetching the forms froms from the firestore and setting them for Forms state
         const fetchForms = async () => {
             try {
                 const formsRef = collection(db, 'forms');
@@ -30,10 +31,12 @@ const Dashboard = () => {
     }, []);
 
 
+    //this will navigate us to that particular form details page we are making dynamic rendering with dynamic id
     const handleFormClick = (formId) => {
         navigate(`/admin/form-detail/${formId}`);
     };
 
+    //deleting the form from the firestore
     const handleFormDelete = async (formId) => {
         try {
             const formDocRef = doc(db, 'forms', formId);
@@ -47,21 +50,22 @@ const Dashboard = () => {
         }
     };
 
+    //editing the existing form
     const handleEditClick = async (formId) => {
         try {
-            // Fetch the specific form document from Firestore
+            // fetching the specific form document
             const formDocRef = doc(db, 'forms', formId);
             const formSnapshot = await getDoc(formDocRef);
 
             if (formSnapshot.exists()) {
                 const formData = formSnapshot.data();
 
-                // Extract formFields and logicConditions from the document
+                //here im extract form fields and logicConditions from the document
                 const { formFields, logicConditions, published } = formData;
                 console.log(formFields, logicConditions, published);
 
 
-                // Set the state for formFields and logicConditions
+                // setting the state for formFields and logicConditions
                 setFormFields(formFields || []); // Ensure it's an array
                 setLogicConditions(logicConditions || { url: '', date: '', time: '' }); // Ensure it's an object
                 setPublished(published || false);

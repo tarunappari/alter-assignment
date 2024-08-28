@@ -24,6 +24,8 @@ const style = {
 
 export default function OpenModal({ title }) {
 
+  let navigate = useNavigate()
+  //default options for lottie animation of create form pbutton
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -33,6 +35,7 @@ export default function OpenModal({ title }) {
     }
   }
 
+  //importing all these from globalContext
   let { setLogicConditions,setFormFields,setFormName, formName,setPublished } = React.useContext(GlobalContext);
 
   let [inputValue, setInputValue] = React.useState(formName)
@@ -41,6 +44,8 @@ export default function OpenModal({ title }) {
   const handleClose = () => setOpen(false);
 
   const handleCreate = () => {
+    //once the form is created im clearing every fields in the form and setting the form name
+    //then navigating to the create form component
     setFormName(inputValue);
     setFormFields([])
     setLogicConditions({ url: '', date: '', time: '' })
@@ -48,8 +53,6 @@ export default function OpenModal({ title }) {
     navigate('/admin/create-form'); // Navigate to the form builder page
     handleClose()
   };
-
-  let navigate = useNavigate()
 
   return (
     <ModalContainer>
