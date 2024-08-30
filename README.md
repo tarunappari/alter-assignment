@@ -18,4 +18,4 @@ The Feedback Form Builder is a React application that allows users to create, ma
 - **Frontend**: Reactjs
 - **Backend**: Firebase Firestore
 
-## Installation
+- used vite
